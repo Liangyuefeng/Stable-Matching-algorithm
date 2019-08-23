@@ -90,28 +90,59 @@ def verifyStable(students, schools, matching):
 
 if __name__ == "__main__":
 
-    data1 = pd.read_csv('F:/Python_Code/Comp702/data/full_preferencelist/10/Schools-Preference19.csv')  # read data from file
+    data1 = pd.read_csv('F:/Python_Code/Comp702/data/full_preferencelist/10schools/50/Schools-Preference.csv')  # read data from file
     school = data1.set_index('Unnamed: 0').T.to_dict('list')
-    print("Schools's preference list:", school)
+    # print("Schools's preference list:", school)
 
-    data2 = pd.read_csv('F:/Python_Code/Comp702/data/full_preferencelist/10/Students-Preference19.csv')
+    data2 = pd.read_csv('F:/Python_Code/Comp702/data/full_preferencelist/10schools/50/Students-Preference.csv')
     student = data2.set_index('Unnamed: 0').T.to_dict('list')
-    print("Students's preference list:", student)
+    # print("Students's preference list:", student)
 
     students = []  # allocate keys and values in dict to Student class
     for k, v in student.items():
         students.append(Student(k, v))
-    print("Students ID:", students)
+    # print("Students ID:", students)
 
     schools = []
     for k, v in school.items():
-        schools.append(School(k, v, 20))
-    print("Schools ID:", schools)
+        schools.append(School(k, v, 50))
+    # print("Schools ID:", schools)
 
-    fr = open("matching1.txt", 'r+')
+    fr = open("F:/Python_Code/Comp702/output_matching/full_preferencelist/sc_matching/10schools/50/IAmatching.txt", 'r+')
     matching = eval(fr.read())  # 读取的str转换为字典
-    print(matching)
+    # print(matching)
     fr.close()
 
     print("Stable?: ", verifyStable(students, schools, matching))
+
+    loop = 100
+    for t in range(loop):
+        if t > 0:
+            data1 = pd.read_csv(
+                'F:/Python_Code/Comp702/data/full_preferencelist/10schools/50/Schools-Preference' + str(t) + '.csv')  # read data from file
+            school = data1.set_index('Unnamed: 0').T.to_dict('list')
+            # print("Schools's preference list:", school)
+
+            data2 = pd.read_csv('F:/Python_Code/Comp702/data/full_preferencelist/10schools/50/Students-Preference' + str(t) + '.csv')
+            student = data2.set_index('Unnamed: 0').T.to_dict('list')
+            # print("Students's preference list:", student)
+
+            students = []  # allocate keys and values in dict to Student class
+            for k, v in student.items():
+                students.append(Student(k, v))
+            # print("Students ID:", students)
+
+            schools = []
+            for k, v in school.items():
+                schools.append(School(k, v, 50))
+            # print("Schools ID:", schools)
+
+            fr = open("F:/Python_Code/Comp702/output_matching/full_preferencelist/sc_matching/10schools/50/IAmatching" + str(t) + ".txt", 'r+')
+            matching = eval(fr.read())  # 读取的str转换为字典
+            # print(matching)
+            fr.close()
+
+            print("Stable?: ", verifyStable(students, schools, matching))
+
+
 
